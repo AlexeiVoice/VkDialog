@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VKDialog</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="dialogs">Диалоги</string>
+    <integer name="com_vk_sdk_AppId">5345199</integer>
+    <string name="sign_in">Войти</string>
+    <string name="auth_error">Ошибка авторизации</string>
+</resources>
