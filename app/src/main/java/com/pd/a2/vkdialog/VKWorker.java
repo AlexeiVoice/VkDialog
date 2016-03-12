@@ -22,7 +22,7 @@ public class VKWorker {
         this.currentActivity = currentActivity;
     }
 
-    public void getMessageItems() {
+    public void refreshMailList() {
         MailItem mailItem = new MailItem();
         Queue<VKRequest> requestQueue = new LinkedList<VKRequest>();
         Queue<MyVKRequestListener> listenerQueue = new LinkedList<MyVKRequestListener>();
@@ -31,8 +31,7 @@ public class VKWorker {
                 mailItem, new ArrayList<MailItem>(), requestQueue, listenerQueue, this);
         request = VKApi.messages().getDialogs(VKParameters.from("preview_length, 20"));
         request.executeWithListener(requestListener);
-        Log.i("MYLOG_VKWorker", "getMessages. End of the method");
-        return ;
+        Log.i("MYLOG_VKWorker", "getMessages. Elnd of the method");
     }
 
     /*

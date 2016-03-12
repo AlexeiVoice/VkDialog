@@ -1,7 +1,6 @@
 package com.pd.a2.vkdialog;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,22 +27,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-
-
     private RecyclerView.Adapter mAdapter;
-
-    public void setMailItemsList(List<MailItem> mailItems) {
-        Log.i("MYLOG_Main activity", "setMailItemsList. Size: " + mailItems.size());
-        this.mailItemsList.clear();
-        for(Iterator<MailItem> iterator = mailItems.iterator(); iterator.hasNext();) {
-            mailItemsList.add(iterator.next());
-        }
-
-    }
-
     private RecyclerView.LayoutManager mLayoutManager;
-
-
     private List<MailItem> mailItemsList;
     private VKWorker vkWorker;
     private android.support.v4.widget.SwipeRefreshLayout mSwipeRefreshLayout;
@@ -65,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //refreshList(mSwipeRefreshLayout);
-                FetchMailFromVK task = new FetchMailFromVK();
-                task.execute();
+                Log.i("Main activity", "Pull to refresh");
+                refreshDataSet();
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -127,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void notifyDataSetChanged() {
         mAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void initializeData(){
@@ -136,30 +121,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshDataSet() {
-        //mailItemsList.clear();
-        vkWorker.getMessageItems();
+        mSwipeRefreshLayout.setRefreshing(true);
+        vkWorker.refreshMailList();
     }
 
-    private class FetchMailFromVK extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mSwipeRefreshLayout.setRefreshing(true);
+    public void setMailItemsList(List<MailItem> mailItems) {
+        Log.i("MYLOG_Main activity", "setMailItemsList. Size: " + mailItems.size());
+        this.mailItemsList.clear();
+        for(Iterator<MailItem> iterator = mailItems.iterator(); iterator.hasNext();) {
+            mailItemsList.add(iterator.next());
         }
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            Log.i("Main activity", "Pull to refresh");
-            refreshDataSet();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Log.i("MYLOG_Main activity", "Pull to refresh. On post execute");
-            notifyDataSetChanged();
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
     }
 }

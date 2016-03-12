@@ -79,8 +79,8 @@ public class MyVKRequestListener extends VKRequest.VKRequestListener {
                 VKList<VKApiUser> usersList = (VKList<VKApiUser>)response.parsedModel;
                 VKApiUser usr = usersList.get(0);
                 //Now we can set what information we missed until now
-                mailItem.setUserName(usr.first_name);
-                mailItem.setUserPicURL(usr.photo_50);
+                mailItem.setUserName(usr.first_name + " " + usr.last_name);
+                mailItem.setUserPicURL(usr.photo_100);
                 addMessage(mailItem);
                  if(!requestQueue.isEmpty() && !listenerQueue.isEmpty()){
                      Log.i("MYLOG_MyRequestListener", "requests left: " + requestQueue.size() +
