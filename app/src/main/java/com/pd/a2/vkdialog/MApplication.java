@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.pd.a2.vkdialog.activity.MainActivity;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
