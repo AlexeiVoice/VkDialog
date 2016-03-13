@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.pd.a2.vkdialog.model.MailItem;
 import com.vk.sdk.VKAccessToken;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private List<MailItem> mailItemsList;
     private VKWorker vkWorker;
     private android.support.v4.widget.SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar progressBar;
     private static final String[] myScope = new String[]{
             VKScope.MESSAGES,
     };
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshDataSet();
             }
         });
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         mRecyclerView = (RecyclerView) findViewById(R.id.itemsRecyclerView);
         mLayoutManager = new LinearLayoutManager(this);
@@ -87,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResult(VKAccessToken res) {
                 // Пользователь успешно авторизовался
-                //TODO Populate message list
                 initializeData();
             }
             @Override
@@ -100,24 +103,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*public void refreshList(android.support.v4.widget.SwipeRefreshLayout layout) {
-        refreshDataSet();
-        onItemsLoadComplete(layout);
-    }*/
-    /*private void onItemsLoadComplete(android.support.v4.widget.SwipeRefreshLayout layout) {
-        mAdapter.notifyDataSetChanged();
-         //stop refresh animation
-    }*/
-
     public void notifyDataSetChanged() {
         mAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void initializeData(){
+        progressBar.setVisibility(View.VISIBLE);
         refreshDataSet();
         mAdapter.notifyDataSetChanged();
-        //TODO Initialize data set
     }
 
     private void refreshDataSet() {

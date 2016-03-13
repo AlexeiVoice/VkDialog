@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/dialogs"
                 android:gravity="center_vertical"
-                android:textSize="18sp"
+                android:textSize="19sp"
                 android:textColor="@color/titleColor"/>
         </android.support.v7.widget.Toolbar>
 
@@ -40,5 +40,4 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
         android:src="@android:drawable/ic_dialog_email" />
-
 </android.support.design.widget.CoordinatorLayout>

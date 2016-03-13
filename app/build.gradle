@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile project(':vksdk_library')
     compile project(':picasso-2.5.2')
+    compile project(':prettytime-4.0.1.Final')
 }

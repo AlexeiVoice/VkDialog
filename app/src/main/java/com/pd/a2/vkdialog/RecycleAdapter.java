@@ -2,6 +2,8 @@ package com.pd.a2.vkdialog;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,9 @@ import android.widget.TextView;
 
 import com.pd.a2.vkdialog.model.MailItem;
 import com.squareup.picasso.Picasso;
+import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.Date;
 import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter <RecycleAdapter.MailItemViewHolder>{
@@ -46,10 +50,16 @@ public class RecycleAdapter extends RecyclerView.Adapter <RecycleAdapter.MailIte
 
     @Override
     public void onBindViewHolder(MailItemViewHolder holder, int position) {
-        Picasso.with(context).load(mailItemList.get(position).getUserPicURL()).into(holder.userPic);
+        String picUrl = mailItemList.get(position).getUserPicURL();
+        PrettyTime prettyTime = new PrettyTime();
+        if(picUrl.trim().length() != 0) {
+            Picasso.with(context).load(picUrl).into(holder.userPic);
+        }
         holder.userName.setText(mailItemList.get(position).getUserName());
-        //TODO use external lib to show time in proper way
-        holder.dateTime.setText(String.valueOf(mailItemList.get(position).getDateTime()));
+        Log.i("MYLOG_RecycleAdapter", String.valueOf(mailItemList.get(position).getDateTime()));
+        Date date = new Date (mailItemList.get(position).getDateTime() * 1000L);
+        Log.i("MYLOG_RecycleAdapter", date.toString());
+        holder.dateTime.setText(prettyTime.format(date));
         holder.messageContent.setText(mailItemList.get(position).getMessageBody());
     }
 

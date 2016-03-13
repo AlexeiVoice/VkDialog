@@ -11,7 +11,6 @@ import com.vk.sdk.VKSdk;
 
 public class MApplication extends android.app.Application {
     Application application = this;
-
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
